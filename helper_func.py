@@ -4,7 +4,7 @@ import base64
 import re
 import asyncio
 from pyrogram import filters
-from config import FORCE_SUB_CHANNEL_1, FORCE_SUB_CHANNEL_2, FORCE_SUB_CHANNEL_3, FORCE_SUB_CHANNEL_4, ADMINS
+from config import FORCE_SUB_CHANNEL_1, FORCE_SUB_CHANNEL_2, FORCE_SUB_CHANNEL_3, FORCE_SUB_CHANNEL_4, FORCE_SUB_CHANNEL_5, ADMINS
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 from pyrogram.errors import FloodWait
 
@@ -18,6 +18,8 @@ async def is_subscribed(filter, client, update):
         return True
     if not FORCE_SUB_CHANNEL_4:
         return True
+    if not FORCE_SUB_CHANNEL_5:
+        return True
     user_id = update.from_user.id
     if user_id in ADMINS:
         return True
@@ -26,6 +28,7 @@ async def is_subscribed(filter, client, update):
         member = await client.get_chat_member(chat_id=FORCE_SUB_CHANNEL_2, user_id=user_id)
         member = await client.get_chat_member(chat_id=FORCE_SUB_CHANNEL_3, user_id=user_id)
         member = await client.get_chat_member(chat_id=FORCE_SUB_CHANNEL_4, user_id=user_id)
+        member = await client.get_chat_member(chat_id=FORCE_SUB_CHANNEL_5, user_id=user_id)
     except UserNotParticipant:
         return False
 
